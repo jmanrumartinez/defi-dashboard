@@ -3,10 +3,11 @@ import initTranslations from "@/i18n/initTranslations";
 import TranslationsProvider from "@/i18n/TranslationsProvider";
 
 export default async function Home({
-  params: { locale },
+  params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   const { t } = await initTranslations(locale, ["common"]);
 
   return (
