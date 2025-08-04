@@ -156,7 +156,7 @@ export function DashboardSidebar() {
         <Separator className="my-4" />
 
         <SidebarGroup>
-          <Collapsible className="list-none">
+          <Collapsible defaultOpen className="list-none">
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton className="w-full justify-between">
