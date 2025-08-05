@@ -8,7 +8,6 @@ import {
   History,
   Settings,
   DollarSign,
-  Globe,
   ChevronDown,
 } from "lucide-react";
 
@@ -36,6 +35,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { ToggleThemeButton } from "@/components/shared/ToggleThemeButton";
 import { DashboardNavItem, DashboardNavItemType } from "./DashboardNavItem";
+import { SwitchLanguageSubButton } from "./SwitchLanguageSubButton";
 
 const navigationItems: DashboardNavItemType[] = [
   {
@@ -63,7 +63,6 @@ const navigationItems: DashboardNavItemType[] = [
 
 export const DashboardSidebarContent = () => {
   const [currency, setCurrency] = React.useState("ETH");
-  const [language, setLanguage] = React.useState("EN");
 
   return (
     <SidebarContent className="px-2 py-4">
@@ -130,27 +129,7 @@ export const DashboardSidebarContent = () => {
                 </SidebarMenuSubItem>
 
                 <SidebarMenuSubItem>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <SidebarMenuSubButton className="w-full justify-between">
-                        <div className="flex items-center">
-                          <Globe className="mr-3 h-4 w-4" />
-                          <span>Change Language</span>
-                        </div>
-                        <span className="text-xs text-muted-foreground">
-                          {language}
-                        </span>
-                      </SidebarMenuSubButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => setLanguage("EN")}>
-                        English
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => setLanguage("ES")}>
-                        Español
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <SwitchLanguageSubButton />
                 </SidebarMenuSubItem>
               </SidebarMenuSub>
             </CollapsibleContent>
