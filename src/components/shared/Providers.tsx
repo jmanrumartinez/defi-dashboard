@@ -1,4 +1,5 @@
 "use client";
+import "@rainbow-me/rainbowkit/styles.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";

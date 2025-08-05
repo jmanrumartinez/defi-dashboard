@@ -1,7 +1,7 @@
 import { SidebarHeader } from "@/components/ui/sidebar";
-import { ChartArea, Wallet } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChartArea } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export const DashboardSidebarHeader = () => {
   const { t } = useTranslation();
@@ -18,10 +18,7 @@ export const DashboardSidebarHeader = () => {
         </div>
       </div>
 
-      <Button className={`w-full`} variant={"outline"}>
-        <Wallet className="mr-2 h-4 w-4" />
-        {t("connect_wallet")}
-      </Button>
+      <ConnectButton />
     </SidebarHeader>
   );
 };
