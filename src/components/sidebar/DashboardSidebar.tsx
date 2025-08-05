@@ -39,8 +39,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { DashboardSidebarHeader } from "./DashboardSidebarHeader";
 import { ToggleThemeButton } from "@/components/shared/ToggleThemeButton";
+import { DashboardNavItem, DashboardNavItemType } from "./DashboardNavItem";
 
-const navigationItems = [
+const navigationItems: DashboardNavItemType[] = [
   {
     title: "Dashboard",
     url: "#",
@@ -77,19 +78,7 @@ export function DashboardSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.isActive}>
-                    <a
-                      href={item.url}
-                      className="flex items-center justify-between"
-                    >
-                      <div className="flex items-center">
-                        <item.icon className="mr-3 h-4 w-4" />
-                        <span>{item.title}</span>
-                      </div>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <DashboardNavItem key={item.title} item={item} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
