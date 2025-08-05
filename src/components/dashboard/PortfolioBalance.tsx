@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/utils/cn";
 import { useAccount, useBalance } from "wagmi";
+import { Skeleton } from "../ui/skeleton";
 
 interface DataItem {
   date: string;
@@ -28,19 +29,23 @@ const data: DataItem[] = [
 ];
 
 export const PortfolioBalance = () => {
-  const { address } = useAccount();
-  const { data: balance } = useBalance({
+  const { address, isConnecting } = useAccount();
+  const { data: balance, isLoading: isBalanceLoading } = useBalance({
     address,
   });
 
   return (
-    <div className="rounded-lg border border-gray-200 p-6">
+    <div className="rounded-lg border border-gray-200 p-6 dark:border-0 dark:bg-[var(--sidebar)]">
       <div className="flex flex-col gap-2">
         <h2 className="text-md font-bold">Portfolio Balance</h2>
-        <div className="flex justify-between items-center">
-          <h3 className="text-4xl font-bold">
-            {balance?.formatted} {balance?.symbol}
-          </h3>
+        <div className="lg:flex justify-between items-center hidden">
+          {isConnecting || isBalanceLoading ? (
+            <Skeleton className="w-lg h-8" />
+          ) : (
+            <h3 className="text-4xl font-bold">
+              {balance?.formatted} {balance?.symbol}
+            </h3>
+          )}
 
           <div className="flex gap-2">
             <Button variant="outline">1H</Button>
