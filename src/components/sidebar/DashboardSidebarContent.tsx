@@ -38,36 +38,42 @@ import { DashboardNavItem, DashboardNavItemType } from "./DashboardNavItem";
 import { SwitchLanguageSubButton } from "./SwitchLanguageSubButton";
 import { useTranslation } from "react-i18next";
 import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export const DashboardSidebarContent = () => {
   const [currency, setCurrency] = useState("ETH");
   const { t } = useTranslation("sidebar");
 
+  const pathname = usePathname();
+
   const navigationItems: DashboardNavItemType[] = useMemo(
     () => [
       {
         title: t("dashboard"),
-        url: "#",
+        url: "/",
         icon: LayoutDashboard,
-        isActive: true,
+        isActive: pathname === "/",
       },
       {
         title: t("assets"),
-        url: "#",
+        url: "/assets",
         icon: Coins,
+        isActive: pathname === "/assets",
       },
       {
         title: t("send_money"),
-        url: "#",
+        url: "/send-money",
         icon: Send,
+        isActive: pathname === "/send-money",
       },
       {
         title: t("transaction_history"),
-        url: "#",
+        url: "/transaction-history",
         icon: History,
+        isActive: pathname === "/transaction-history",
       },
     ],
-    [t]
+    [t, pathname]
   );
 
   return (

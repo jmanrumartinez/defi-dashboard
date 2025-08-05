@@ -36,9 +36,9 @@ export default async function RootLayout({
       >
         <TranslationsProvider locale={locale} namespaces={["common"]}>
           <SidebarProvider>
-            <div className="flex">
+            <div className="flex h-screen w-full">
               <DashboardSidebar />
-              <main className="w-full">{children}</main>
+              <main className="w-full py-4 px-6">{children}</main>
             </div>
           </SidebarProvider>
         </TranslationsProvider>
