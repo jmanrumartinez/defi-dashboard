@@ -5,7 +5,6 @@ import {
   Wallet,
   LayoutDashboard,
   Coins,
-  Clock,
   Send,
   History,
   Settings,
@@ -15,7 +14,6 @@ import {
   Globe,
   ChevronDown,
   TrendingUp,
-  Activity,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -33,10 +31,8 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -44,12 +40,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 
 const navigationItems = [
   {
