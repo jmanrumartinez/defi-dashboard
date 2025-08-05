@@ -2,21 +2,17 @@
 
 import * as React from "react";
 import {
-  Wallet,
   LayoutDashboard,
   Coins,
   Send,
   History,
   Settings,
-  Moon,
-  Sun,
   DollarSign,
   Globe,
   ChevronDown,
-  TrendingUp,
+  Sun,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -33,7 +29,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -42,6 +37,8 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
+import { DashboardSidebarHeader } from "./DashboardSidebarHeader";
+import { ToggleThemeButton } from "@/components/shared/ToggleThemeButton";
 
 const navigationItems = [
   {
@@ -67,60 +64,13 @@ const navigationItems = [
   },
 ];
 
-const accountSettings = [
-  {
-    title: "Default Currency",
-    url: "#",
-    icon: DollarSign,
-    action: "USD",
-  },
-  {
-    title: "Change Language",
-    url: "#",
-    icon: Globe,
-    action: "EN",
-  },
-];
-
 export function DashboardSidebar() {
-  const [isConnected, setIsConnected] = React.useState(false);
-  const [isDark, setIsDark] = React.useState(false);
   const [currency, setCurrency] = React.useState("USD");
   const [language, setLanguage] = React.useState("EN");
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle("dark");
-  };
-
-  const connectWallet = () => {
-    setIsConnected(!isConnected);
-  };
-
   return (
     <Sidebar className="border-r border-border/40">
-      <SidebarHeader className="border-b border-border/40 p-4">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <TrendingUp className="h-4 w-4 text-primary-foreground" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold">DeFi Dashboard</span>
-            <span className="text-xs text-muted-foreground">v2.1.0</span>
-          </div>
-        </div>
-
-        <Button
-          onClick={connectWallet}
-          className={`w-full ${
-            isConnected ? "bg-green-600 hover:bg-green-700" : ""
-          }`}
-          variant={isConnected ? "default" : "outline"}
-        >
-          <Wallet className="mr-2 h-4 w-4" />
-          {isConnected ? "Wallet Connected" : "Connect Wallet"}
-        </Button>
-      </SidebarHeader>
+      <DashboardSidebarHeader />
 
       <SidebarContent className="px-2 py-4">
         <SidebarGroup>
@@ -163,14 +113,7 @@ export function DashboardSidebar() {
                 <SidebarMenuSub>
                   <SidebarMenuSubItem>
                     <SidebarMenuSubButton asChild className="gap-0">
-                      <button onClick={toggleTheme} className="w-full">
-                        {isDark ? (
-                          <Sun className="mr-3 h-4 w-4" />
-                        ) : (
-                          <Moon className="mr-3 h-4 w-4" />
-                        )}
-                        <span>Switch to {isDark ? "Light" : "Dark"} Theme</span>
-                      </button>
+                      <ToggleThemeButton />
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
 
