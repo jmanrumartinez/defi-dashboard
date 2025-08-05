@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 import { DashboardSidebar } from "@/components/sidebar/DashboardSidebar";
@@ -6,6 +5,7 @@ import { DashboardSidebar } from "@/components/sidebar/DashboardSidebar";
 import TranslationsProvider from "@/i18n/TranslationsProvider";
 import initTranslations from "@/i18n/initTranslations";
 import { Providers } from "@/components/shared/Providers";
+import { Locale } from "@rainbow-me/rainbowkit";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,12 +41,12 @@ export default async function RootLayout({
   const { locale } = await params;
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <TranslationsProvider locale={locale} namespaces={["common"]}>
-          <Providers>
+          <Providers locale={locale}>
             <div className="flex h-screen w-full">
               <DashboardSidebar />
               <main className="w-full py-4 px-6">{children}</main>
