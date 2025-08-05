@@ -1,6 +1,7 @@
 {    
     "app_title": "DeFi Dashboard",
     "app_version": "v2.1.0",
+    "app_description": "Conecta tu wallet y comienza a gestionar tus activos",
     "connect_wallet": "Conectar Wallet",
     "switch_to": "Cambiar a tema {{theme}}",
     "light": "claro",
