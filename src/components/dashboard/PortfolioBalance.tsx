@@ -5,6 +5,7 @@ import { AreaChart } from "@/components/ui/area-chart";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/utils/cn";
+import { useAccount, useBalance } from "wagmi";
 
 interface DataItem {
   date: string;
@@ -27,12 +28,19 @@ const data: DataItem[] = [
 ];
 
 export const PortfolioBalance = () => {
+  const { address } = useAccount();
+  const { data: balance } = useBalance({
+    address,
+  });
+
   return (
     <div className="rounded-lg border border-gray-200 p-6">
       <div className="flex flex-col gap-2">
         <h2 className="text-md font-bold">Portfolio Balance</h2>
         <div className="flex justify-between items-center">
-          <h3 className="text-4xl font-bold">0.0004 ETH</h3>
+          <h3 className="text-4xl font-bold">
+            {balance?.formatted} {balance?.symbol}
+          </h3>
 
           <div className="flex gap-2">
             <Button variant="outline">1H</Button>
