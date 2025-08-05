@@ -1,6 +1,7 @@
 {
     "dashboard": "Dashboard",
     "assets": "Assets",
+    "nfts": "NFTs",
     "send_money": "Send Money",
     "transaction_history": "Transaction History",
     "account_settings": "Account Settings",

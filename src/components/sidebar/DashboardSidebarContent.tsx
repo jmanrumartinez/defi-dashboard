@@ -9,6 +9,7 @@ import {
   Settings,
   DollarSign,
   ChevronDown,
+  Image,
 } from "lucide-react";
 
 import {
@@ -58,7 +59,13 @@ export const DashboardSidebarContent = () => {
         title: t("assets"),
         url: "/assets",
         icon: Coins,
-        isActive: pathname === "/assets",
+        isActive: pathname === "/nfts",
+      },
+      {
+        title: t("nfts"),
+        url: "/nfts",
+        icon: Image,
+        isActive: pathname === "/nfts",
       },
       {
         title: t("send_money"),
