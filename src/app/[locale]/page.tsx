@@ -11,7 +11,6 @@ export default async function Home({
 
   return (
     <div>
-      <p>Hello to {t("app_title")}</p>
       <PortfolioBalance />
     </div>
   );

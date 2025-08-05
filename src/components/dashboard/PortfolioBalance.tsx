@@ -4,6 +4,7 @@ import { CircleChevronDown } from "lucide-react";
 import { AreaChart } from "@/components/ui/area-chart";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { cn } from "@/utils/cn";
 
 interface DataItem {
   date: string;
@@ -26,46 +27,35 @@ const data: DataItem[] = [
 ];
 
 export const PortfolioBalance = () => {
-  const [datas, setDatas] = useState(null);
-
   return (
-    <div className="rounded-lg border-[1px] border-gray-200 p-6">
-      <h2 className="text-md font-bold">Portfolio Balance</h2>
-      <div className="flex justify-between items-center">
-        <h3 className="text-4xl font-bold">$2.65</h3>
+    <div className="rounded-lg border border-gray-200 p-6">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-md font-bold">Portfolio Balance</h2>
+        <div className="flex justify-between items-center">
+          <h3 className="text-4xl font-bold">0.0004 ETH</h3>
 
-        <div className="flex gap-2">
-          <Button variant="outline">1H</Button>
-          <Button variant="outline">1D</Button>
-          <Button variant="outline">1W</Button>
-          <Button variant="outline">1M</Button>
-          <Button variant="outline">1Y</Button>
-          <Button variant="outline">All</Button>
+          <div className="flex gap-2">
+            <Button variant="outline">1H</Button>
+            <Button variant="outline">1D</Button>
+            <Button variant="outline">1W</Button>
+            <Button variant="outline">1M</Button>
+            <Button variant="outline">1Y</Button>
+            <Button variant="outline">All</Button>
+          </div>
         </div>
+        <p className="text-sm text-gray-500 flex items-center gap-1">
+          <CircleChevronDown className={cn("w-4 h-4")} />
+          -1.23%
+        </p>
       </div>
-      <p className="text-sm text-gray-500 flex items-center gap-1">
-        <CircleChevronDown className="w-4 h-4" />
-        -1.23%
-      </p>
       <AreaChart
         data={data}
         index="date"
         categories={["revenue"]}
         showLegend={false}
         showYAxis={false}
-        startEndOnly={true}
         className="-mb-2 mt-8 h-48"
-        tooltipCallback={(props) => {
-          if (props.active) {
-            setDatas((prev) => {
-              if (prev?.label === props.label) return prev;
-              return props;
-            });
-          } else {
-            setDatas(null);
-          }
-          return null;
-        }}
+        tooltipCallback={() => {}}
       />
     </div>
   );
