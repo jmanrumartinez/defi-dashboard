@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
 import { DashboardSidebar } from "@/components/sidebar/DashboardSidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+
 import TranslationsProvider from "@/i18n/TranslationsProvider";
 import initTranslations from "@/i18n/initTranslations";
+import { Providers } from "@/components/shared/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,12 +46,12 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <TranslationsProvider locale={locale} namespaces={["common"]}>
-          <SidebarProvider>
+          <Providers>
             <div className="flex h-screen w-full">
               <DashboardSidebar />
               <main className="w-full py-4 px-6">{children}</main>
             </div>
-          </SidebarProvider>
+          </Providers>
         </TranslationsProvider>
       </body>
     </html>
