@@ -16,7 +16,7 @@ import { i18nConfig } from "@/i18n/i18nConfig";
 export const SwitchLanguageSubButton = (
   props: React.ComponentProps<typeof SidebarMenuSubButton>
 ) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation("sidebar");
   const currentLocale = i18n.language;
   const router = useRouter();
   const currentPathname = usePathname();
@@ -50,7 +50,7 @@ export const SwitchLanguageSubButton = (
         <SidebarMenuSubButton className="w-full justify-between" {...props}>
           <div className="flex items-center">
             <Globe className="mr-3 h-4 w-4" />
-            <span>Change Language</span>
+            <span>{t("change_language")}</span>
           </div>
           <span className="text-xs text-muted-foreground">
             {currentLocale?.toUpperCase() || "EN"}

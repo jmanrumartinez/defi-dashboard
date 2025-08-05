@@ -36,33 +36,39 @@ import { Separator } from "@/components/ui/separator";
 import { ToggleThemeButton } from "@/components/shared/ToggleThemeButton";
 import { DashboardNavItem, DashboardNavItemType } from "./DashboardNavItem";
 import { SwitchLanguageSubButton } from "./SwitchLanguageSubButton";
-
-const navigationItems: DashboardNavItemType[] = [
-  {
-    title: "Dashboard",
-    url: "#",
-    icon: LayoutDashboard,
-    isActive: true,
-  },
-  {
-    title: "Assets",
-    url: "#",
-    icon: Coins,
-  },
-  {
-    title: "Send Money",
-    url: "#",
-    icon: Send,
-  },
-  {
-    title: "Transaction History",
-    url: "#",
-    icon: History,
-  },
-];
+import { useTranslation } from "react-i18next";
+import { useMemo, useState } from "react";
 
 export const DashboardSidebarContent = () => {
-  const [currency, setCurrency] = React.useState("ETH");
+  const [currency, setCurrency] = useState("ETH");
+  const { t } = useTranslation("sidebar");
+
+  const navigationItems: DashboardNavItemType[] = useMemo(
+    () => [
+      {
+        title: t("dashboard"),
+        url: "#",
+        icon: LayoutDashboard,
+        isActive: true,
+      },
+      {
+        title: t("assets"),
+        url: "#",
+        icon: Coins,
+      },
+      {
+        title: t("send_money"),
+        url: "#",
+        icon: Send,
+      },
+      {
+        title: t("transaction_history"),
+        url: "#",
+        icon: History,
+      },
+    ],
+    [t]
+  );
 
   return (
     <SidebarContent className="px-2 py-4">
@@ -85,7 +91,7 @@ export const DashboardSidebarContent = () => {
               <SidebarMenuButton className="w-full justify-between">
                 <div className="flex items-center">
                   <Settings className="mr-3 h-4 w-4" />
-                  <span>Account Settings</span>
+                  <span>{t("account_settings")}</span>
                 </div>
                 <ChevronDown className="h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
               </SidebarMenuButton>
@@ -104,7 +110,7 @@ export const DashboardSidebarContent = () => {
                       <SidebarMenuSubButton className="w-full justify-between">
                         <div className="flex items-center">
                           <DollarSign className="mr-3 h-4 w-4" />
-                          <span>Default Currency</span>
+                          <span>{t("default_currency")}</span>
                         </div>
                         <span className="text-xs text-muted-foreground">
                           {currency}

@@ -1,3 +1,8 @@
 {    
-    "app_title": "Defi Dashboard en Español"
+    "app_title": "DeFi Dashboard",
+    "app_version": "v2.1.0",
+    "connect_wallet": "Conectar Wallet",
+    "switch_to": "Cambiar a tema {{theme}}",
+    "light": "claro",
+    "dark": "oscuro"
 }

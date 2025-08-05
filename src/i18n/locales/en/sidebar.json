@@ -1,0 +1,9 @@
+{
+    "dashboard": "Dashboard",
+    "assets": "Assets",
+    "send_money": "Send Money",
+    "transaction_history": "Transaction History",
+    "account_settings": "Account Settings",
+    "default_currency": "Default Currency",
+    "change_language": "Change Language"
+}

@@ -1,9 +1,11 @@
 import React from "react";
 import { Sun, Moon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const ToggleThemeButton = (
   props: React.ButtonHTMLAttributes<HTMLButtonElement>
 ) => {
+  const { t } = useTranslation("common");
   const [isDark, setIsDark] = React.useState(false);
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -17,7 +19,7 @@ export const ToggleThemeButton = (
       ) : (
         <Moon className="mr-3 h-4 w-4" />
       )}
-      <span>Switch to {isDark ? "Light" : "Dark"} Theme</span>
+      <span>{t("switch_to", { theme: isDark ? t("light") : t("dark") })}</span>
     </button>
   );
 };

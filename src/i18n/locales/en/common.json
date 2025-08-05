@@ -1,3 +1,8 @@
 {
-    "app_title": "Defi Dashboard"
+    "app_title": "DeFi Dashboard",
+    "app_version": "v2.1.0",
+    "connect_wallet": "Connect Wallet",
+    "switch_to": "Switch to {{theme}} theme",
+    "light": "light",
+    "dark": "dark"
 }
