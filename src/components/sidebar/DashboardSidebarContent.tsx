@@ -62,7 +62,7 @@ const navigationItems: DashboardNavItemType[] = [
 ];
 
 export const DashboardSidebarContent = () => {
-  const [currency, setCurrency] = React.useState("USD");
+  const [currency, setCurrency] = React.useState("ETH");
   const [language, setLanguage] = React.useState("EN");
 
   return (
