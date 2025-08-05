@@ -1,4 +1,4 @@
-import { ExampleClientComponent } from "@/components/ExampleClientComponent";
+import { PortfolioBalance } from "@/components/dashboard/PortfolioBalance";
 import initTranslations from "@/i18n/initTranslations";
 
 export default async function Home({
@@ -12,8 +12,7 @@ export default async function Home({
   return (
     <div>
       <p>Hello to {t("app_title")}</p>
-
-      <ExampleClientComponent />
+      <PortfolioBalance />
     </div>
   );
 }
