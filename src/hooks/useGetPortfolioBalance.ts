@@ -77,7 +77,7 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
       //   );
 
       let balance: Balance[] = [];
-      // Temporary for mocks, delete this on prod
+      // TODO: Temporary for mocks to avoid calling the API, delete this on production
       switch (timeframe) {
         case "1D":
           balance = await getBalancesByBlockNumbers(
