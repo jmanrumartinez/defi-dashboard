@@ -3,36 +3,28 @@
 import { CircleChevronDown } from "lucide-react";
 import { AreaChart } from "@/components/ui/area-chart";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+
 import { cn } from "@/utils/cn";
 import { useAccount, useBalance } from "wagmi";
 import { Skeleton } from "../ui/skeleton";
 
-interface DataItem {
-  date: string;
-  revenue: number;
-}
-
-const data: DataItem[] = [
-  { date: "Jan 23", revenue: 2340 },
-  { date: "Feb 23", revenue: 3110 },
-  { date: "Mar 23", revenue: 4643 },
-  { date: "Apr 23", revenue: 4650 },
-  { date: "May 23", revenue: 3980 },
-  { date: "Jun 23", revenue: 4702 },
-  { date: "Jul 23", revenue: 5990 },
-  { date: "Aug 23", revenue: 5700 },
-  { date: "Sep 23", revenue: 4250 },
-  { date: "Oct 23", revenue: 4182 },
-  { date: "Nov 23", revenue: 3812 },
-  { date: "Dec 23", revenue: 4900 },
-];
+import { Balance, Timeframe } from "@/types/portfolio";
+import { useGetPortfolioBalance } from "@/hooks/useGetPortfolioBalance";
+import { AreaChartSkeleton } from "../portfolio/AreaChartSkeleton";
 
 export const PortfolioBalance = () => {
   const { address, isConnecting } = useAccount();
   const { data: balance, isLoading: isBalanceLoading } = useBalance({
     address,
   });
+  const [timeframeSelected, setTimeframeSelected] = useState<Timeframe>("1W");
+  const { portfolioBalance, isLoading: isPortfolioBalanceLoading } =
+    useGetPortfolioBalance(timeframeSelected);
+
+  const handleSelectTimeframe = (timeframeSelected: Timeframe) => {
+    setTimeframeSelected(timeframeSelected);
+  };
 
   return (
     <div className="rounded-lg border border-gray-200 p-6 dark:border-0 dark:bg-[var(--sidebar)]">
@@ -48,12 +40,42 @@ export const PortfolioBalance = () => {
           )}
 
           <div className="flex gap-2">
-            <Button variant="outline">1H</Button>
-            <Button variant="outline">1D</Button>
-            <Button variant="outline">1W</Button>
-            <Button variant="outline">1M</Button>
-            <Button variant="outline">1Y</Button>
-            <Button variant="outline">All</Button>
+            <Button
+              variant="outline"
+              className={cn({
+                "bg-accent dark:bg-input": timeframeSelected === "1D",
+              })}
+              onClick={() => handleSelectTimeframe("1D")}
+            >
+              1D
+            </Button>
+            <Button
+              variant="outline"
+              className={cn({
+                "bg-accent dark:bg-input": timeframeSelected === "1W",
+              })}
+              onClick={() => handleSelectTimeframe("1W")}
+            >
+              1W
+            </Button>
+            <Button
+              variant="outline"
+              className={cn({
+                "bg-accent dark:bg-input": timeframeSelected === "1M",
+              })}
+              onClick={() => handleSelectTimeframe("1M")}
+            >
+              1M
+            </Button>
+            <Button
+              variant="outline"
+              className={cn({
+                "bg-accent dark:bg-input": timeframeSelected === "1Y",
+              })}
+              onClick={() => handleSelectTimeframe("1Y")}
+            >
+              1Y
+            </Button>
           </div>
         </div>
         <p className="text-sm text-gray-500 flex items-center gap-1">
@@ -61,15 +83,18 @@ export const PortfolioBalance = () => {
           -1.23%
         </p>
       </div>
-      <AreaChart
-        data={data}
-        index="date"
-        categories={["revenue"]}
-        showLegend={false}
-        showYAxis={false}
-        className="-mb-2 mt-8 h-48"
-        tooltipCallback={() => {}}
-      />
+      {isPortfolioBalanceLoading ? (
+        <AreaChartSkeleton className="-mb-2 mt-8 h-48" />
+      ) : (
+        <AreaChart
+          data={portfolioBalance}
+          index="date"
+          categories={["balance"]}
+          showLegend={false}
+          showYAxis={false}
+          className="-mb-2 mt-8 h-48"
+        />
+      )}
     </div>
   );
 };
