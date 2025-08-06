@@ -40,10 +40,10 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
 
       const getBalancePromises: Promise<GetBalanceReturnType>[] = [];
 
-      for (const trace of blockNumbersByTimestamp) {
+      for (const blockInfo of blockNumbersByTimestamp) {
         const promise = getBalance(config, {
-          address: address,
-          blockNumber: BigInt(trace.blockNumber),
+          address,
+          blockNumber: BigInt(blockInfo.blockNumber),
         });
 
         getBalancePromises.push(promise);
