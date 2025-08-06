@@ -83,7 +83,7 @@ export const PortfolioBalance = () => {
           -1.23%
         </p>
       </div>
-      {isPortfolioBalanceLoading ? (
+      {isPortfolioBalanceLoading || !portfolioBalance ? (
         <AreaChartSkeleton className="-mb-2 mt-8 h-48" />
       ) : (
         <AreaChart
