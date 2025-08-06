@@ -34,7 +34,7 @@ export const PortfolioBalance = () => {
 
   const percentageChange =
     portfolioBalance && portfolioBalance?.length > 1
-      ? calculatePercentageChange(portfolioBalance).toFixed(2)
+      ? calculatePercentageChange(portfolioBalance)
       : 0;
 
   return (

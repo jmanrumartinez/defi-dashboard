@@ -15,7 +15,7 @@ export const PercentageIndicator = ({ value }: { value: number }) => {
           "rotate-270": value === 0,
         })}
       />
-      {value}%
+      {value.toFixed(2)}%
     </p>
   );
 };
