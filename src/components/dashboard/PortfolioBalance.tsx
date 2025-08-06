@@ -7,11 +7,12 @@ import { useState } from "react";
 
 import { cn } from "@/utils/cn";
 import { useAccount, useBalance } from "wagmi";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import { Timeframe } from "@/types/portfolio";
 import { useGetPortfolioBalance } from "@/hooks/useGetPortfolioBalance";
-import { AreaChartSkeleton } from "../portfolio/AreaChartSkeleton";
+import { AreaChartSkeleton } from "@/components/portfolio/AreaChartSkeleton";
+import { SectionCard } from "@/components/shared/SectionCard";
 
 export const PortfolioBalance = () => {
   const { address, isConnecting } = useAccount();
@@ -27,9 +28,9 @@ export const PortfolioBalance = () => {
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 p-6 dark:border-0 dark:bg-[var(--sidebar)]">
+    <SectionCard>
       <div className="flex flex-col gap-2">
-        <h2 className="text-md font-bold">Portfolio Balance</h2>
+        <SectionCard.Title>Portfolio Balance</SectionCard.Title>
         <div className="lg:flex justify-between items-center hidden">
           {isConnecting || isBalanceLoading ? (
             <Skeleton className="w-lg h-8" />
@@ -95,6 +96,6 @@ export const PortfolioBalance = () => {
           className="-mb-2 mt-8 h-48"
         />
       )}
-    </div>
+    </SectionCard>
   );
 };
