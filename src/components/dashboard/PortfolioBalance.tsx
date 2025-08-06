@@ -14,6 +14,7 @@ import { useGetPortfolioBalance } from "@/hooks/useGetPortfolioBalance";
 import { AreaChartSkeleton } from "@/components/portfolio/AreaChartSkeleton";
 import { SectionCard } from "@/components/shared/SectionCard";
 import { TimeframeButton } from "./TimeframeButton";
+import { calculatePercentageChange } from "@/utils/portfolio";
 
 export const timeframeValues: Timeframe[] = ["1D", "1W", "1M", "1Y"];
 
@@ -29,6 +30,11 @@ export const PortfolioBalance = () => {
   const handleSelectTimeframe = (timeframeSelected: Timeframe) => {
     setTimeframeSelected(timeframeSelected);
   };
+
+  const percentageChange =
+    portfolioBalance && portfolioBalance?.length > 1
+      ? calculatePercentageChange(portfolioBalance).toFixed(2)
+      : 0;
 
   return (
     <SectionCard>
@@ -54,9 +60,19 @@ export const PortfolioBalance = () => {
             ))}
           </div>
         </div>
-        <p className="text-sm text-gray-500 flex items-center gap-1">
-          <CircleChevronDown className={cn("w-4 h-4")} />
-          -1.23%
+        <p
+          className={cn("text-sm text-gray-500 flex items-center gap-1", {
+            "text-emerald-500": Number(percentageChange) > 0,
+            "text-red-400": Number(percentageChange) < 0,
+          })}
+        >
+          <CircleChevronDown
+            className={cn("w-4 h-4", {
+              "rotate-180": Number(percentageChange) > 0,
+              "rotate-270": Number(percentageChange) === 0,
+            })}
+          />
+          {percentageChange}%
         </p>
       </div>
       {isPortfolioBalanceLoading || !portfolioBalance ? (

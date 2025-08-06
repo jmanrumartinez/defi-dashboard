@@ -1,4 +1,4 @@
-import { Timeframe } from "@/types/portfolio";
+import { Timeframe, Balance } from "@/types/portfolio";
 import moment from "moment";
 
 export const datesFormatByTimeframe: Record<Timeframe, string> = {
@@ -55,4 +55,24 @@ export const generateTimeStampsByTimeframe = (
   }
 
   return timestamps;
+};
+
+export const calculatePercentageChange = (balances: Balance[]): number => {
+  if (!balances || balances.length < 2) {
+    return 0;
+  }
+
+  const firstBalance = parseFloat(balances[0].balance);
+  const lastBalance = parseFloat(balances[balances.length - 1].balance);
+
+  if (firstBalance === 0) {
+    if (lastBalance === 0) {
+      return 0;
+    }
+    return 100;
+  }
+
+  const percentageChange = ((lastBalance - firstBalance) / firstBalance) * 100;
+
+  return percentageChange;
 };
