@@ -13,6 +13,9 @@ import { Timeframe } from "@/types/portfolio";
 import { useGetPortfolioBalance } from "@/hooks/useGetPortfolioBalance";
 import { AreaChartSkeleton } from "@/components/portfolio/AreaChartSkeleton";
 import { SectionCard } from "@/components/shared/SectionCard";
+import { TimeframeButton } from "./TimeframeButton";
+
+export const timeframeValues: Timeframe[] = ["1D", "1W", "1M", "1Y"];
 
 export const PortfolioBalance = () => {
   const { address, isConnecting } = useAccount();
@@ -41,42 +44,14 @@ export const PortfolioBalance = () => {
           )}
 
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className={cn({
-                "bg-accent dark:bg-input": timeframeSelected === "1D",
-              })}
-              onClick={() => handleSelectTimeframe("1D")}
-            >
-              1D
-            </Button>
-            <Button
-              variant="outline"
-              className={cn({
-                "bg-accent dark:bg-input": timeframeSelected === "1W",
-              })}
-              onClick={() => handleSelectTimeframe("1W")}
-            >
-              1W
-            </Button>
-            <Button
-              variant="outline"
-              className={cn({
-                "bg-accent dark:bg-input": timeframeSelected === "1M",
-              })}
-              onClick={() => handleSelectTimeframe("1M")}
-            >
-              1M
-            </Button>
-            <Button
-              variant="outline"
-              className={cn({
-                "bg-accent dark:bg-input": timeframeSelected === "1Y",
-              })}
-              onClick={() => handleSelectTimeframe("1Y")}
-            >
-              1Y
-            </Button>
+            {timeframeValues.map((timeframe: Timeframe) => (
+              <TimeframeButton
+                key={timeframe}
+                timeframe={timeframe}
+                isSelected={timeframeSelected === timeframe}
+                onClick={handleSelectTimeframe}
+              />
+            ))}
           </div>
         </div>
         <p className="text-sm text-gray-500 flex items-center gap-1">
