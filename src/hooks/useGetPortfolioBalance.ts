@@ -4,7 +4,7 @@ import config from "@/config/rainbow";
 import moment from "moment";
 import {
   datesFormatByTimeframe,
-  //  generateTimeStampsByTimeFrame,
+  //  generateTimeStampsByTimeframe,
 } from "@/utils/portfolio";
 import {
   mockLast24hBlocks,
@@ -67,7 +67,7 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
 
   const getPortfolioBalance = useCallback(
     async (timeframe: Timeframe) => {
-      //   const timestamps = generateTimeStampsByTimeFrame(timeframe);
+      //   const timestamps = generateTimeStampsByTimeframe(timeframe);
       //   const blockNumberByTimeStamps = await getBlockNumberByTimestamps(
       //     timestamps
       //   );

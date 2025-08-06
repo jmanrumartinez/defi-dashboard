@@ -8,7 +8,7 @@ export const datesFormatByTimeframe: Record<Timeframe, string> = {
   "1Y": "MMM",
 };
 
-export const generateTimeStampsByTimeFrame = (
+export const generateTimeStampsByTimeframe = (
   timeframe: Timeframe
 ): number[] => {
   const timestamps: number[] = [];
