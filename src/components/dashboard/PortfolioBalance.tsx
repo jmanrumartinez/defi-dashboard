@@ -15,6 +15,7 @@ import { AreaChartSkeleton } from "@/components/portfolio/AreaChartSkeleton";
 import { SectionCard } from "@/components/shared/SectionCard";
 import { TimeframeButton } from "./TimeframeButton";
 import { calculatePercentageChange } from "@/utils/portfolio";
+import { PercentageIndicator } from "./PercentageIndicator";
 
 export const timeframeValues: Timeframe[] = ["1D", "1W", "1M", "1Y"];
 
@@ -60,20 +61,7 @@ export const PortfolioBalance = () => {
             ))}
           </div>
         </div>
-        <p
-          className={cn("text-sm text-gray-500 flex items-center gap-1", {
-            "text-emerald-500": Number(percentageChange) > 0,
-            "text-red-400": Number(percentageChange) < 0,
-          })}
-        >
-          <CircleChevronDown
-            className={cn("w-4 h-4", {
-              "rotate-180": Number(percentageChange) > 0,
-              "rotate-270": Number(percentageChange) === 0,
-            })}
-          />
-          {percentageChange}%
-        </p>
+        <PercentageIndicator value={Number(percentageChange)} />
       </div>
       {isPortfolioBalanceLoading || !portfolioBalance ? (
         <AreaChartSkeleton className="-mb-2 mt-8 h-48" />
