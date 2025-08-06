@@ -1,21 +1,30 @@
 import { Balance, BlockNumberByTimestamp, Timeframe } from "@/types/portfolio";
-import { getBalance } from "@wagmi/core";
+import { getBalance, GetBalanceReturnType } from "@wagmi/core";
 import config from "@/config/rainbow";
 import moment from "moment";
-import { datesFormatByTimeframe } from "@/utils/portfolio";
+import {
+  datesFormatByTimeframe,
+  //  generateTimeStampsByTimeFrame,
+} from "@/utils/portfolio";
 import {
   mockLast24hBlocks,
   mockLastMonthBlocks,
   mockLastSevenDaysBlocks,
   mockLastYearBlocks,
 } from "@/mocks/portfolioBalance";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useAccount } from "wagmi";
+import { useQuery } from "@tanstack/react-query";
+// import { getBlockNumberByTimestamps } from "@/actions/getBlockNumberByTimestamps";
 
 export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
   const { address, isConnecting } = useAccount();
-  const [portfolioBalance, setPortfolioBalance] = useState<Balance[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean | undefined>();
+
+  const { data: portfolioBalance, isLoading } = useQuery({
+    queryKey: ["fetchPortfolioBalance", address, timeframe],
+    queryFn: () => getPortfolioBalance(timeframe),
+    enabled: Boolean(address && !isConnecting && timeframe),
+  });
 
   const getBalancesByBlockNumbers = useCallback(
     async (
@@ -29,19 +38,27 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
         return balances;
       }
 
+      const getBalancePromises: Promise<GetBalanceReturnType>[] = [];
+
       for (const trace of blockNumbersByTimestamp) {
-        const balance = await getBalance(config, {
+        const promise = getBalance(config, {
           address: address,
           blockNumber: BigInt(trace.blockNumber),
         });
 
+        getBalancePromises.push(promise);
+      }
+
+      const balancesResponse = await Promise.all(getBalancePromises);
+
+      balancesResponse.forEach((balance, i) => {
         balances.unshift({
           balance: balance.formatted,
-          date: moment(trace.timestamp).format(
+          date: moment(blockNumbersByTimestamp[i].timestamp).format(
             datesFormatByTimeframe[timeframe]
           ),
         });
-      }
+      });
 
       return balances;
     },
@@ -50,19 +67,14 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
 
   const getPortfolioBalance = useCallback(
     async (timeframe: Timeframe) => {
-      // const timestamps = generateTimeStampsByTimeFrame(timeframe);
-      //console.log("timestamps", timestamps);
-      // const blockNumberByTimeStamps = await getBlockNumberByTimestamp(
-      //   timestamps
-      // );
-
-      // console.log("blockNumberByTimeStamps", blockNumberByTimeStamps);
-
-      // const balance = await getBalancesByBlockNumbers(
-      //   blockNumberByTimeStamps,
-      //   timeframe
-      // );
-      setIsLoading(true);
+      //   const timestamps = generateTimeStampsByTimeFrame(timeframe);
+      //   const blockNumberByTimeStamps = await getBlockNumberByTimestamps(
+      //     timestamps
+      //   );
+      //   const balance = await getBalancesByBlockNumbers(
+      //     blockNumberByTimeStamps,
+      //     timeframe
+      //   );
 
       let balance: Balance[] = [];
       // Temporary for mocks, delete this on prod
@@ -93,19 +105,10 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
           break;
       }
 
-      setIsLoading(false);
-      setPortfolioBalance(balance);
+      return balance;
     },
     [getBalancesByBlockNumbers]
   );
-
-  useEffect(() => {
-    if (!address || isConnecting || !timeframe) {
-      return;
-    }
-
-    getPortfolioBalance(timeframe);
-  }, [address, getPortfolioBalance, isConnecting, timeframe]);
 
   return { portfolioBalance, isLoading };
 };

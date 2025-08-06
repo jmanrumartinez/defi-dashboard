@@ -3,13 +3,13 @@
 import { CircleChevronDown } from "lucide-react";
 import { AreaChart } from "@/components/ui/area-chart";
 import { Button } from "@/components/ui/button";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
 import { cn } from "@/utils/cn";
 import { useAccount, useBalance } from "wagmi";
 import { Skeleton } from "../ui/skeleton";
 
-import { Balance, Timeframe } from "@/types/portfolio";
+import { Timeframe } from "@/types/portfolio";
 import { useGetPortfolioBalance } from "@/hooks/useGetPortfolioBalance";
 import { AreaChartSkeleton } from "../portfolio/AreaChartSkeleton";
 
