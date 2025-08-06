@@ -10,6 +10,8 @@ import {
 import Image from "next/image";
 import { PercentageIndicator } from "./PercentageIndicator";
 
+// WIP: This is a placeholder for the actual assets data
+
 const response = {
   cursor: null,
   page: 0,
