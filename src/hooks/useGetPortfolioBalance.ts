@@ -54,9 +54,9 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
       balancesResponse.forEach((balance, i) => {
         balances.unshift({
           balance: balance.formatted,
-          date: moment(blockNumbersByTimestamp[i].timestamp).format(
-            datesFormatByTimeframe[timeframe]
-          ),
+          date: moment
+            .utc(blockNumbersByTimestamp[i].timestamp)
+            .format(datesFormatByTimeframe[timeframe]),
         });
       });
 
