@@ -23,6 +23,10 @@ export const mockLastSevenDaysBlocks = [
     blockNumber: 23043704,
     timestamp: "2025-08-01T03:59:59.000Z",
   },
+  {
+    blockNumber: 23036566,
+    timestamp: "2025-07-31T03:59:59.000Z",
+  },
 ];
 
 export const mockLast24hBlocks = [
