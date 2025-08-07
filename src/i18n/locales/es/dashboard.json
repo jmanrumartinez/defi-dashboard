@@ -1,0 +1,14 @@
+{
+    "dashboard": {
+      "yourAssets": {
+        "title": "Tus Activos",
+        "table": {
+          "asset": "Activo",
+          "balance": "Balance",
+          "price": "Precio",
+          "priceChange": "Cambio de Precio en 24h",
+          "allocation": "Distribución"
+        }
+      }
+    }
+  }

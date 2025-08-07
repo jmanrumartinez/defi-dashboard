@@ -13,21 +13,23 @@ import Image from "next/image";
 import { PercentageIndicator } from "./PercentageIndicator";
 import { useGetWalletTokenBalances } from "@/hooks/useGetWalletTokenBalances";
 import { YourAssetsTableRowSkeleton } from "../assets/TableBodySkeleton";
+import { useTranslation } from "react-i18next";
 
 export const YourAssets = () => {
   const { data, isLoading } = useGetWalletTokenBalances();
+  const { t } = useTranslation("dashboard");
 
   return (
     <SectionCard>
-      <SectionCard.Title>Your Assets</SectionCard.Title>
+      <SectionCard.Title>{t("dashboard.yourAssets.title")}</SectionCard.Title>
       <Table className="mt-4">
         <TableHeader>
           <TableRow>
-            <TableHead>Asset</TableHead>
-            <TableHead>Balance</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>24h Price Change</TableHead>
-            <TableHead>Allocation</TableHead>
+            <TableHead>{t("dashboard.yourAssets.table.asset")}</TableHead>
+            <TableHead>{t("dashboard.yourAssets.table.balance")}</TableHead>
+            <TableHead>{t("dashboard.yourAssets.table.price")}</TableHead>
+            <TableHead>{t("dashboard.yourAssets.table.priceChange")}</TableHead>
+            <TableHead>{t("dashboard.yourAssets.table.allocation")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

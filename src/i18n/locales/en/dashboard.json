@@ -1,0 +1,14 @@
+{
+  "dashboard": {
+    "yourAssets": {
+      "title": "Your Assets",
+      "table": {
+        "asset": "Asset",
+        "balance": "Balance",
+        "price": "Price",
+        "priceChange": "24h Price Change",
+        "allocation": "Allocation"
+      }
+    }
+  }
+}
