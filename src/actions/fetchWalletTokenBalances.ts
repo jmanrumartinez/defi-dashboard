@@ -2,7 +2,7 @@
 
 import { Address } from "viem";
 
-type MoralisTokenBalance = {
+export type MoralisTokenBalance = {
   token_address: string;
   symbol: string;
   name: string;

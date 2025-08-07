@@ -8,67 +8,136 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  ColumnDef,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
+} from "@tanstack/react-table";
 
 import Image from "next/image";
 import { PercentageIndicator } from "./PercentageIndicator";
 import { useGetWalletTokenBalances } from "@/hooks/useGetWalletTokenBalances";
 import { YourAssetsTableRowSkeleton } from "../assets/TableBodySkeleton";
 import { useTranslation } from "react-i18next";
+import { MoralisTokenBalance } from "@/actions/fetchWalletTokenBalances";
+import { useMemo, useState } from "react";
+import { cn } from "@/utils/cn";
 
 export const YourAssets = () => {
   const { data, isLoading } = useGetWalletTokenBalances();
   const { t } = useTranslation("dashboard");
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: "balance_formatted",
+      desc: true,
+    },
+  ]);
+
+  const columnHelper = createColumnHelper<MoralisTokenBalance>();
+
+  const columns: ColumnDef<MoralisTokenBalance>[] = useMemo(
+    () => [
+      columnHelper.accessor("symbol", {
+        header: t("dashboard.yourAssets.table.asset"),
+        cell: ({ cell, row }) => (
+          <div className="flex items-center gap-2">
+            <Image
+              src={row.original.logo}
+              alt={row.original.name}
+              width={20}
+              height={20}
+            />
+            <div className="flex flex-col">
+              <p className="text-md font-medium">{cell.getValue()}</p>
+              <p className="text-sm text-gray-500">{row.original.name}</p>
+            </div>
+          </div>
+        ),
+      }),
+      columnHelper.accessor("balance_formatted", {
+        header: t("dashboard.yourAssets.table.balance"),
+        cell: ({ cell, row }) => (
+          <div className="flex flex-col">
+            <p className="text-md font-medium">
+              {cell.getValue()} {row.getValue("symbol")}
+            </p>
+            <p className="text-sm text-gray-500 font-medium">
+              ${row.original.usd_value.toFixed(2)}
+            </p>
+          </div>
+        ),
+      }),
+      columnHelper.accessor("usd_price", {
+        header: t("dashboard.yourAssets.table.price"),
+        cell: ({ cell }) => `$${cell.getValue().toFixed(2)}`,
+      }),
+      columnHelper.accessor("usd_price_24hr_percent_change", {
+        header: t("dashboard.yourAssets.table.priceChange"),
+        cell: ({ cell }) => <PercentageIndicator value={cell.getValue()} />,
+      }),
+      columnHelper.accessor("portfolio_percentage", {
+        header: t("dashboard.yourAssets.table.allocation"),
+        cell: ({ cell }) => `${cell.getValue().toFixed(2)}%`,
+      }),
+    ],
+    [columnHelper, t]
+  );
+
+  const table = useReactTable({
+    data: data?.result ?? [],
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onSortingChange: setSorting,
+    state: {
+      sorting,
+    },
+    enableSortingRemoval: false,
+  });
 
   return (
     <SectionCard>
       <SectionCard.Title>{t("dashboard.yourAssets.title")}</SectionCard.Title>
       <Table className="mt-4">
         <TableHeader>
-          <TableRow>
-            <TableHead>{t("dashboard.yourAssets.table.asset")}</TableHead>
-            <TableHead>{t("dashboard.yourAssets.table.balance")}</TableHead>
-            <TableHead>{t("dashboard.yourAssets.table.price")}</TableHead>
-            <TableHead>{t("dashboard.yourAssets.table.priceChange")}</TableHead>
-            <TableHead>{t("dashboard.yourAssets.table.allocation")}</TableHead>
-          </TableRow>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                  className={cn({
+                    "cursor-pointer select-none": header.column.getCanSort(),
+                  })}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext()
+                  )}
+                  {{
+                    asc: " ▲",
+                    desc: " ▼",
+                  }[header.column.getIsSorted() as string] ?? null}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
         </TableHeader>
         <TableBody>
           {isLoading || !data ? (
             <YourAssetsTableRowSkeleton numberOfRows={3} />
           ) : (
-            data?.result.map((asset) => (
-              <TableRow key={asset.token_address}>
-                <TableCell className="font-medium">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={asset.logo}
-                      alt={asset.symbol}
-                      width={20}
-                      height={20}
-                    />
-                    <div className="flex flex-col">
-                      <p className="text-md font-medium">{asset.symbol}</p>
-                      <p className="text-sm text-gray-500">{asset.name}</p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex flex-col">
-                    <p className="text-md font-medium">
-                      ${asset.usd_value.toFixed(2)}
-                    </p>
-                    <p className="text-sm text-gray-500 font-medium">
-                      {asset.balance_formatted} {asset.symbol}
-                    </p>
-                  </div>
-                </TableCell>
-                <TableCell>${asset.usd_price.toFixed(2)}</TableCell>
-                <TableCell>
-                  <PercentageIndicator
-                    value={asset.usd_price_24hr_percent_change}
-                  />
-                </TableCell>
-                <TableCell>{asset.portfolio_percentage.toFixed(2)}%</TableCell>
+            table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id} className="font-medium">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
               </TableRow>
             ))
           )}
