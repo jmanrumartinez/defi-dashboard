@@ -39,7 +39,8 @@ export const YourAssets = () => {
 
   const columnHelper = createColumnHelper<MoralisTokenBalance>();
 
-  const columns: ColumnDef<MoralisTokenBalance>[] = useMemo(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const columns: ColumnDef<MoralisTokenBalance, any>[] = useMemo(
     () => [
       columnHelper.accessor("symbol", {
         header: t("dashboard.yourAssets.table.asset"),
