@@ -16,11 +16,13 @@ import { SectionCard } from "@/components/shared/SectionCard";
 import { TimeframeButton } from "./TimeframeButton";
 import { calculatePercentageChange } from "@/utils/portfolio";
 import { PercentageIndicator } from "./PercentageIndicator";
+import { useTranslation } from "react-i18next";
 
 export const timeframeValues: Timeframe[] = ["1D", "1W", "1M", "1Y"];
 
 export const PortfolioBalance = () => {
   const { address, isConnecting } = useAccount();
+  const { t } = useTranslation("dashboard");
   const { data: balance, isLoading: isBalanceLoading } = useBalance({
     address,
   });
@@ -40,7 +42,9 @@ export const PortfolioBalance = () => {
   return (
     <SectionCard>
       <div className="flex flex-col gap-2">
-        <SectionCard.Title>Portfolio Balance</SectionCard.Title>
+        <SectionCard.Title>
+          {t("dashboard.portfolioBalance.title")}
+        </SectionCard.Title>
         <div className="lg:flex justify-between items-center hidden">
           {isConnecting || isBalanceLoading ? (
             <Skeleton className="w-lg h-8" />
