@@ -3,7 +3,7 @@
 import { CircleChevronDown } from "lucide-react";
 import { AreaChart } from "@/components/ui/area-chart";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { cn } from "@/utils/cn";
 import { useAccount, useBalance } from "wagmi";
@@ -39,6 +39,16 @@ export const PortfolioBalance = () => {
       ? calculatePercentageChange(portfolioBalance)
       : 0;
 
+  const percentageTextByTimeFrame: Record<Timeframe, string> = useMemo(
+    () => ({
+      "1D": t("dashboard.portfolioBalance.percentageInfo.pastDay"),
+      "1M": t("dashboard.portfolioBalance.percentageInfo.pastMonth"),
+      "1W": t("dashboard.portfolioBalance.percentageInfo.pastWeek"),
+      "1Y": t("dashboard.portfolioBalance.percentageInfo.pastYear"),
+    }),
+    [t]
+  );
+
   return (
     <SectionCard>
       <div className="flex flex-col gap-2">
@@ -65,7 +75,17 @@ export const PortfolioBalance = () => {
             ))}
           </div>
         </div>
-        <PercentageIndicator value={Number(percentageChange)} />
+        <div className="flex gap-1">
+          <PercentageIndicator value={Number(percentageChange)} />
+          <p
+            className={cn("text-xs text-gray-500 flex items-center gap-1", {
+              "text-emerald-500": percentageChange > 0,
+              "text-red-400": percentageChange < 0,
+            })}
+          >
+            {percentageTextByTimeFrame[timeframeSelected]}
+          </p>
+        </div>
       </div>
       {isPortfolioBalanceLoading || !portfolioBalance ? (
         <AreaChartSkeleton className="-mb-2 mt-8 h-48" />

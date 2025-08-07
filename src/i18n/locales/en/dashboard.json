@@ -1,7 +1,13 @@
 {
   "dashboard": {
     "portfolioBalance": {
-      "title": "Portfolio Balance"
+      "title": "Portfolio Balance",
+      "percentageInfo": {
+        "pastDay": "past 24h",
+        "pastMonth": "past month",
+        "pastWeek": "past week",
+        "pastYear": "past year"
+      }
     },
     "yourAssets": {
       "title": "Your Assets",
