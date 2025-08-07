@@ -24,6 +24,11 @@ export const useGetPortfolioBalance = (timeframe: Timeframe = "1W") => {
     queryKey: ["fetchPortfolioBalance", address, timeframe],
     queryFn: () => getPortfolioBalance(timeframe),
     enabled: Boolean(address && !isConnecting && timeframe),
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    gcTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    retry: 2,
   });
 
   const getBalancesByBlockNumbers = useCallback(
